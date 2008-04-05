@@ -12,6 +12,7 @@
 
 #include "../nraConfig.h"
 #include "../nraAssert.h"
+#include "../errorcode.h"
 
 #include "tiffio.h"
 #include <math.h>

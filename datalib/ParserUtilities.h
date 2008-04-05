@@ -786,8 +786,8 @@ public:
 template <typename T>
 ParameterTree<T>::ParameterTree()
 {
-  root = position = NULL;
-  level = 0;
+  this->root = this->position = NULL;
+  this->level = 0;
 }
 
 
@@ -795,16 +795,16 @@ ParameterTree<T>::ParameterTree()
 template <typename T>
 ParameterTree<T>::~ParameterTree()
 {
-  if(IsRoot())
+  if(this->IsRoot())
     {
-      GoToRoot();
-      ChopLeftBranch();
-      ChopRightBranch();
-      delete root;
+      this->GoToRoot();
+      this->ChopLeftBranch();
+      this->ChopRightBranch();
+      delete this->root;
 
-      root = NULL;
-      position = NULL;
-      level = 0;
+      this->root = NULL;
+      this->position = NULL;
+      this->level = 0;
     }
 }
 
@@ -818,7 +818,7 @@ int ParameterTree<T>::CreateSorted(char* name)
   parameter.name = name;
   parameter.isSet = 0;
 
-  if(GoToRoot())
+  if(this->GoToRoot())
     {
       //      cout << "insert root *" << endl;
       return(InsertRoot(parameter));
@@ -853,10 +853,10 @@ int ParameterTree<T>::CreateSortedRecursively(char* name)
   else if(status<0)
     // name < current name (lexicographically)
     {
-      if(IsLeftBranch())
+      if(this->IsLeftBranch())
 	{
 	  //	  cout << "turn left -> ";
-	  TurnLeft();
+	  this->TurnLeft();
 	  CreateSortedRecursively(name);
 	}
       else
@@ -868,10 +868,10 @@ int ParameterTree<T>::CreateSortedRecursively(char* name)
   else
     // name > current name (lexicographically)
     {
-      if(IsRightBranch())
+      if(this->IsRightBranch())
 	{
 	  //	  cout << "turn right -> ";
-	  TurnRight();
+	  this->TurnRight();
 	  CreateSortedRecursively(name);
 	}
       else
@@ -889,7 +889,7 @@ int ParameterTree<T>::Insert(const T& value)
 {
   Parameter<T> parameter;
 
-  parameter.name = position->data.name;
+  parameter.name = this->position->data.name;
   //  cout << "Parameter " << position->data.name << " set to ";
   parameter.value = value;
   //  cout << value << endl;
@@ -934,7 +934,7 @@ int ParameterTree<T>::InsertSorted(char* name, const T& value)
   parameter.value = value;
   parameter.isSet = 1;
 
-  if(GoToRoot())
+  if(this->GoToRoot())
     {
       //      cout << "insert root *" << endl;
       return(InsertRoot(parameter));
@@ -971,10 +971,10 @@ int ParameterTree<T>::InsertSortedRecursively(char* name, const T& value)
   else if(status<0)
     // name < current name (lexicographically)
     {
-      if(IsLeftBranch())
+      if(this->IsLeftBranch())
 	{
 	  //	  cout << "turn left -> ";
-	  TurnLeft();
+	  this->TurnLeft();
 	 
 	  InsertSortedRecursively(name, value);
 	}
@@ -987,10 +987,10 @@ int ParameterTree<T>::InsertSortedRecursively(char* name, const T& value)
   else
     // name > current name (lexicographically)
     {
-      if(IsRightBranch())
+      if(this->IsRightBranch())
 	{
 	  //	  cout << "turn right -> ";
-	  TurnRight();
+	  this->TurnRight();
 	  InsertSortedRecursively(name, value);
 	}
       else
@@ -1006,7 +1006,7 @@ int ParameterTree<T>::InsertSortedRecursively(char* name, const T& value)
 template <typename T>
 int ParameterTree<T>::GoTo(char* name)
 {
-  if(GoToRoot())
+  if(this->GoToRoot())
     {
       //      cout << "Empty tree!" << endl;
       return(1);
@@ -1040,10 +1040,10 @@ int ParameterTree<T>::GoToRecursively(char* name)
   else if(status<0)
     // name < current name (lexicographically)
     {
-      if(IsLeftBranch())
+      if(this->IsLeftBranch())
 	{
 	  //	  cout << "turn left -> ";
-	  TurnLeft();
+	  this->TurnLeft();
 	  return(GoToRecursively(name));
 	}
       else
@@ -1055,10 +1055,10 @@ int ParameterTree<T>::GoToRecursively(char* name)
   else
     // name > current name (lexicographically)
     {
-      if(IsRightBranch())
+      if(this->IsRightBranch())
 	{
 	  //	  cout << "turn right -> ";
-	  TurnRight();
+	  this->TurnRight();
 	  return(GoToRecursively(name));
 	}
       else
@@ -1074,7 +1074,7 @@ int ParameterTree<T>::GoToRecursively(char* name)
 template <typename T>
 int ParameterTree<T>::GetSorted(char* name, T& value)
 {
-  if(GoToRoot())
+  if(this->GoToRoot())
     {
       cout << "Empty tree!" << endl;
       return(1);
@@ -1116,10 +1116,10 @@ int ParameterTree<T>::GetSortedRecursively(char* name, T& value)
   else if(status<0)
     // name < current name (lexicographically)
     {
-      if(IsLeftBranch())
+      if(this->IsLeftBranch())
 	{
 	  //	  cout << "turn left -> ";
-	  TurnLeft();
+	  this->TurnLeft();
 	  GetSortedRecursively(name, value);
 	}
       else
@@ -1131,10 +1131,10 @@ int ParameterTree<T>::GetSortedRecursively(char* name, T& value)
   else
     // name > current name (lexicographically)
     {
-      if(IsRightBranch())
+      if(this->IsRightBranch())
 	{
 	  //	  cout << "turn right -> ";
-	  TurnRight();
+	  this->TurnRight();
 	  GetSortedRecursively(name, value);
 	}
       else

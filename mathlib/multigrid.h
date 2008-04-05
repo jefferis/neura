@@ -142,7 +142,7 @@ int Multigrid<T>::Initialise(const LabellingTypes labellingType, const Interpola
     }
 
   directSolver.SetSolverType(solverType);
-  directSolver.SetPrecision(epsilon);
+  directSolver.SetPrecision(this->epsilon);
   directSolver.SetMaximumSteps(10000);
 
   SetCycleType(type);
@@ -271,8 +271,8 @@ int Multigrid<T>::SetProjection(const MultiVector<T>& u)
   smoother[numberOfLevels].SetProjection(u);
   smoother[numberOfLevels].SetSmoothingType(PROJECTED_GAUSS_SEIDEL);
 
-  projection.Reset(u.Length());
-  projection = u;
+  this->projection.Reset(u.Length());
+  this->projection = u;
 
   for(level = 1; level<numberOfLevels; level++)
     {
@@ -290,7 +290,7 @@ int Multigrid<T>::MultigridCycle(MultiVector<T>& b, MultiVector<T>& u)
 {
   if(isProjected)
     {
-      return(ProjectedMultigridCycle(b,u,projection,numberOfLevels));
+      return(ProjectedMultigridCycle(b,u,this->projection,numberOfLevels));
     }
   else
     {
@@ -675,14 +675,14 @@ int Multigrid<T>::Solve(MultiVector<T>& b, MultiVector<T>& u)
   cout << "Initial error: " << newError << endl;
   iniError = newError;
 
-  while(!(newError<epsilon2 || newError<epsilon*iniError) && ++n<maxSteps)
+  while(!(newError<epsilon2 || newError<this->epsilon*iniError) && ++n<this->maxSteps)
     {
       if(isFull)
 	{
 	  if(isProjected)
 	    {
 	      CalcResidual(matrixHierarchy[numberOfLevels], b, u, residual);
-	      FullProjectedMultigridCycle(residual, projection-u, defect);
+	      FullProjectedMultigridCycle(residual, this->projection-u, defect);
 	      u += defect;
 	    }
 	  else
@@ -730,7 +730,7 @@ int Multigrid<T>::Solve(MultiVector<T>& b, MultiVector<T>& u)
       cout << newError/error << endl;
     }
   
-  return(int(n==maxSteps));
+  return(int(n==this->maxSteps));
 }
 
 

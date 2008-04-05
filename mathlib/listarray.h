@@ -68,10 +68,10 @@ int ListArray<T>::Reset(const int newlength)
   head = tail = 0;
 
   length = 0;
-  maxLength = l;
-  elements.Reset(l);
-  next.Reset(l);
-  previous.Reset(l);
+  maxLength = this->l;
+  elements.Reset(this->l);
+  next.Reset(this->l);
+  previous.Reset(this->l);
 
   return(0);
 }

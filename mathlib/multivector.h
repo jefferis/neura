@@ -26,7 +26,7 @@ public:
   T operator* (const MultiVector<T>&) const;
 
   //  friend Vector<T> operator* <> (const T &, const Vector<T> &);
-  friend T ScalarProduct <>(const MultiVector<T>&, const MultiVector<T>&);
+  // friend T ScalarProduct <>(const MultiVector<T>&, const MultiVector<T>&);
 };
 
 template <typename T>

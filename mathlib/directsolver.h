@@ -63,8 +63,8 @@ int DirectSolver<T>::SolveGaussSeidel(SparseMatrix<T>& mat, MultiVector<T>& b, M
   T err = iniErr;
   while( 
 	( ErrorNorm(mat,b,u)>epsilon2 ) &&
-	( err>epsilon*iniErr) &&
-	( ++step<maxSteps )
+	( err>this->epsilon*iniErr) &&
+	( ++step<this->maxSteps )
 	)
     {
       //cout << "step: " << step << ", error: " << ErrorNorm(mat,b,u) << endl;
@@ -74,7 +74,7 @@ int DirectSolver<T>::SolveGaussSeidel(SparseMatrix<T>& mat, MultiVector<T>& b, M
 
     }
   cout << "GaussSeidel steps: " << step << endl;
-  return(int(step==maxSteps));
+  return(int(step==this->maxSteps));
 }
 
 
@@ -86,16 +86,16 @@ int DirectSolver<T>::SolveProjectedGaussSeidel(SparseMatrix<T>& mat, MultiVector
   int step = 0;
 
   gaussSeidel.SetSmoothingType(PROJECTED_GAUSS_SEIDEL);
-  gaussSeidel.SetProjection(projection);
+  gaussSeidel.SetProjection(this->projection);
 
-  while((ProjectedErrorNorm(mat,b,u)>epsilon && step<maxSteps) || step<5)
+  while((ProjectedErrorNorm(mat,b,u)>this->epsilon && step<this->maxSteps) || step<5)
     {
       //      cout << "step: " << step << ", error: " << ProjectedErrorNorm(mat,b,u) << endl;
       gaussSeidel.Smoothen(mat,b,u);
       ++step;
     }
 
-  return(int(step==maxSteps));
+  return(int(step==this->maxSteps));
 }
 
 
@@ -108,13 +108,13 @@ int DirectSolver<T>::SolveILU(SparseMatrix<T>& mat, MultiVector<T>& b, MultiVect
 
   ilu.SetSmoothingType(POINT_ILU);
 
-  while(ErrorNorm(mat,b,u)>epsilon && ++step<maxSteps)
+  while(ErrorNorm(mat,b,u)>this->epsilon && ++step<this->maxSteps)
     {
       //      cout << "step: " << step << ", error: " << ErrorNorm(mat,b,u) << endl;
       ilu.Smoothen(mat,b,u);
     }
 
-  return(int(step==maxSteps));
+  return(int(step==this->maxSteps));
 }
 
 
@@ -147,9 +147,9 @@ int DirectSolver<T>::SolveBiCGstab(SparseMatrix<T>& mat, MultiVector<T>& b, Mult
   while( 
 	( err>epsilon2 ) 
 	&& 
-	( err>epsilon*iniErr) 
+	( err>this->epsilon*iniErr) 
 	&& 
-	( ++step<maxSteps )
+	( ++step<this->maxSteps )
 	)
     {
      
@@ -194,7 +194,7 @@ int DirectSolver<T>::SolveBiCGstab(SparseMatrix<T>& mat, MultiVector<T>& b, Mult
   
   cout << "BiCGstab: error = " <<  err << ", rel.: " << err/iniErr << endl;
   cout << "BiCGstab steps: " << step << endl;
-  return(int(step==maxSteps));
+  return(int(step==this->maxSteps));
 }
 
 

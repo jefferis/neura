@@ -230,7 +230,7 @@ public:
   int Reset(const Array<int>&, const int);
 //  ~SparseMatrix(){Delete();}
   int Delete();
-  int Bandwidth(const int i) const {return(elements[i].length);return(0);}
+  int Bandwidth(const int i) const {return(this->elements[i].length);return(0);}
   int NumberOfColumns(){return(numberOfColumns);return(0);}
   inline int Insert(const Array<int>&, const Array<int>&, const T&);
   inline int Insert(const int, const int, const T&);
@@ -269,9 +269,9 @@ public:
 template <typename T>
 SparseMatrix<T>::SparseMatrix()
 {
-  elements.Reset(0);
-  length.Reset(0);
-  totalLength=0;
+  this->elements.Reset(0);
+  this->length.Reset(0);
+  this->totalLength=0;
   numberOfColumns=0;
 }
 
@@ -315,25 +315,25 @@ template <typename T>
 int SparseMatrix<T>::Reset(const Array<int>& newLength, const int len)
 {
     int i;
-    dimension = newLength.Length();
-    length.Reset(dimension);
-    length = newLength;
+    this->dimension = newLength.Length();
+    this->length.Reset(this->dimension);
+    this->length = newLength;
 
-    totalLength = length[1];
+    this->totalLength = this->length[1];
 
-    for(i=2;i<=dimension;i++)
+    for(i=2;i <= this->dimension;i++)
     {
-	totalLength *= length[i];
+	this->totalLength *= this->length[i];
     }
 
-    elements.Reset(totalLength);
+    this->elements.Reset(this->totalLength);
 
-    for(i=1;i<=totalLength;i++)
+    for(i=1;i <= this->totalLength;i++)
     {
-	elements[i].Reset(len);
+	this->elements[i].Reset(len);
     }
 
-//    cout << elements << endl;
+//    cout << this->elements << endl;
 
     numberOfColumns = 0;
     return 0;
@@ -346,12 +346,12 @@ int SparseMatrix<T>::Delete()
 {
   int i;
 
-  for(i=1;i<=totalLength;i++)
+  for(i=1;i<=this->totalLength;i++)
   {
-	elements[i].Delete();
+	this->elements[i].Delete();
   }
 
-//  elements.Delete();
+//  this->elements.Delete();
   return 0;
 }
 
@@ -360,7 +360,7 @@ int SparseMatrix<T>::Delete()
 template <typename T>
 inline int SparseMatrix<T>::Insert(const Array<int>& row, const Array<int>& column, const T& value)
 {
-    int col = Index(column), r = Index(row);
+    int col = this->Index(column), r = this->Index(row);
     if(col>numberOfColumns)
     {
 	numberOfColumns = col;
@@ -368,11 +368,11 @@ inline int SparseMatrix<T>::Insert(const Array<int>& row, const Array<int>& colu
 
     if(col==r)
     {
-	return(elements[r].Prepend(col,value));
+	return(this->elements[r].Prepend(col,value));
     }
     else
     {
-	return(elements[r].Insert(col,value));
+	return(this->elements[r].Insert(col,value));
     }
 }
 
@@ -388,11 +388,11 @@ inline int SparseMatrix<T>::Insert(const int row, const int column, const T& val
 
     if(column==row)
     {
-	return(elements[row].Prepend(column,value));
+	return(this->elements[row].Prepend(column,value));
     }
     else
     {
-	return(elements[row].Insert(column,value));
+	return(this->elements[row].Insert(column,value));
     }
 }
 
@@ -408,11 +408,11 @@ inline int SparseMatrix<T>::Add(const int row, const int column, const T& value)
 
     if(column==row)
     {
-	return(elements[row].PreAdd(column,value));
+	return(this->elements[row].PreAdd(column,value));
     }
     else
     {
-	return(elements[row].Add(column,value));
+	return(this->elements[row].Add(column,value));
     }
 }
 
@@ -421,7 +421,7 @@ inline int SparseMatrix<T>::Add(const int row, const int column, const T& value)
 template <typename T>
 inline int SparseMatrix<T>::Add(const Array<int>& row, const Array<int>& column, const T& value)
 {
-    int col = Index(column), r=Index(row);
+    int col = this->Index(column), r=this->Index(row);
     if(col>numberOfColumns)
     {
 	numberOfColumns = col;
@@ -429,11 +429,11 @@ inline int SparseMatrix<T>::Add(const Array<int>& row, const Array<int>& column,
 
     if(col==r)
     {
-	return(elements[r].PreAdd(col,value));
+	return(this->elements[r].PreAdd(col,value));
     }
     else
     {
-	return(elements[r].Add(col,value));
+	return(this->elements[r].Add(col,value));
     }
 }
 
@@ -444,9 +444,9 @@ inline int SparseMatrix<T>::AddIdentity()
 {
   int i;
 
-  for(i=1; i<=totalLength; i++)
+  for(i=1; i<=this->totalLength; i++)
     {
-	elements[i].Add(i,1);
+	this->elements[i].Add(i,1);
     }
 
   return(0);
@@ -459,9 +459,9 @@ inline int SparseMatrix<T>::AddMultipleIdentity(const T factor)
 {
   int i;
 
-  for(i=1; i<=totalLength; i++)
+  for(i=1; i<=this->totalLength; i++)
     {
-	elements[i].Add(i,factor);
+	this->elements[i].Add(i,factor);
     }
 
   return(0);
@@ -484,9 +484,9 @@ inline int SparseMatrix<T>::Multiply(const MultiVector<T> & u, MultiVector<T> & 
     //int p,
     int i;
 
-    for(i=1;i<=totalLength;i++)
+    for(i=1;i<=this->totalLength;i++)
     {
-	v[i] = elements[i].Multiply(u);
+	v[i] = this->elements[i].Multiply(u);
     }
     return(0);
 }
@@ -501,14 +501,14 @@ inline int SparseMatrix<T>::MultiplyTransposed(const MultiVector<T> & u,
     T data;
     v.SetZero();
 
-    for(i=1;i<=totalLength;i++)
+    for(i=1;i<=this->totalLength;i++)
     {
-	elements[i].GoToHead();
+	this->elements[i].GoToHead();
 
-	while(elements[i].GetElement(id,data))
+	while(this->elements[i].GetElement(id,data))
 	{
 	    v.Add(id,data*u[i]);
-	    elements[i].Move();
+	    this->elements[i].Move();
 	}
     }
     return(0);
@@ -519,19 +519,19 @@ inline int SparseMatrix<T>::MultiplyTransposed(const MultiVector<T> & u,
 template <typename T>
 inline int SparseMatrix<T>::GetElement(const int row, int & column, T& element)
 {
-    if(elements[row].pos>elements[row].length)
+    if(this->elements[row].pos>this->elements[row].length)
     {
 	return(0);
     }
     else
     {
-	column = elements[row].id[elements[row].pos];
-	element = elements[row].data[elements[row].pos];
+	column = this->elements[row].id[this->elements[row].pos];
+	element = this->elements[row].data[this->elements[row].pos];
 
 	return(1);
     }
 
-//    return(elements[row].GetElement(column,element));
+//    return(this->elements[row].GetElement(column,element));
 }
 
 
@@ -539,21 +539,21 @@ inline int SparseMatrix<T>::GetElement(const int row, int & column, T& element)
 template <typename T>
 inline int SparseMatrix<T>::GetElement(const Array<int>& row, Array<int>& column, T& element)
 {
-    int srow = Index(row);
+    int srow = this->Index(row);
 
-    if(elements[srow].pos>elements[srow].length)
+    if(this->elements[srow].pos>this->elements[srow].length)
     {
 	return(0);
     }
     else
     {
-	column = Position(elements[srow].id[elements[srow].pos]);
-	element = elements[srow].data[elements[srow].pos];
+	column = Position(this->elements[srow].id[this->elements[srow].pos]);
+	element = this->elements[srow].data[this->elements[srow].pos];
 
 	return(1);
     }
 
-//    return(Position(elements[Index(row)].GetElement(Index(column), element)));
+//    return(Position(this->elements[Index(row)].GetElement(Index(column), element)));
 }
 
 
@@ -562,8 +562,8 @@ inline int SparseMatrix<T>::GetElement(const Array<int>& row, Array<int>& column
 template <typename T>
 inline int SparseMatrix<T>::Move(const int row)
 {
-    if(++elements[row].pos>elements[row].length){return(0);}else{return(1);}
-//  return(elements[row].Move());
+    if(++this->elements[row].pos>this->elements[row].length){return(0);}else{return(1);}
+//  return(this->elements[row].Move());
 }
 
 
@@ -571,9 +571,9 @@ inline int SparseMatrix<T>::Move(const int row)
 template <typename T>
 inline int SparseMatrix<T>::Move(const Array<int>& row)
 {
-    int r = Index(row);
-    if(++elements[r].pos>elements[r].length){return(0);}else{return(1);}
-//  return(elements[Index(row)].Move());
+    int r = this->Index(row);
+    if(++this->elements[r].pos>this->elements[r].length){return(0);}else{return(1);}
+//  return(this->elements[Index(row)].Move());
 }
 
 
@@ -581,8 +581,8 @@ inline int SparseMatrix<T>::Move(const Array<int>& row)
 template <typename T>
 inline int SparseMatrix<T>::GoToDiagonal(const int row)
 {
-    elements[row].pos = 1;
-//  return(elements[row].GoToHead());
+    this->elements[row].pos = 1;
+//  return(this->elements[row].GoToHead());
     return 0;
 }
 
@@ -591,8 +591,8 @@ inline int SparseMatrix<T>::GoToDiagonal(const int row)
 template <typename T>
 inline int SparseMatrix<T>::GoToDiagonal(const Array<int>& row)
 {
-    elements[Index(row)].pos = 1;
-//  return(elements[Index(row)].GoToHead());
+    this->elements[this->Index(row)].pos = 1;
+//  return(this->elements[Index(row)].GoToHead());
 }
 
 
@@ -600,7 +600,7 @@ inline int SparseMatrix<T>::GoToDiagonal(const Array<int>& row)
 template <typename T>
 inline int SparseMatrix<T>::MultiplyRow(const int row, const T& factor)
 {
-    elements[row].Multiply(factor);
+    this->elements[row].Multiply(factor);
     return 0;
 }
 
@@ -611,9 +611,9 @@ inline int SparseMatrix<T>::Multiply(const T& factor)
 {
   int i;
 
-  for(i=1; i<=totalLength; i++)
+  for(i=1; i<=this->totalLength; i++)
     {
-	elements[i].Multiply(factor);
+	this->elements[i].Multiply(factor);
     }
 
   return(0);
@@ -624,8 +624,8 @@ inline int SparseMatrix<T>::Multiply(const T& factor)
 template <typename T>
 inline int SparseMatrix<T>::DeleteRow(const int row)
 {
-    return(elements[row].SetZero());
-//  return(elements[row].Delete());
+    return(this->elements[row].SetZero());
+//  return(this->elements[row].Delete());
 }
 
 
@@ -633,8 +633,8 @@ inline int SparseMatrix<T>::DeleteRow(const int row)
 template <typename T>
 inline int SparseMatrix<T>::DeleteRow(const Array<int>& row)
 {
-    return(elements[Index(row)].SetZero());
-//  return(elements[Index(row)].Delete());
+    return(this->elements[this->Index(row)].SetZero());
+//  return(this->elements[Index(row)].Delete());
 }
 
 
@@ -644,9 +644,9 @@ inline int SparseMatrix<T>::SetZero()
 {
   int row;
 
-  for(row=1; row<=totalLength; row++)
+  for(row=1; row<=this->totalLength; row++)
   {
-      elements[row].SetZero();
+      this->elements[row].SetZero();
   }
   numberOfColumns = 0;
 
@@ -658,11 +658,11 @@ inline int SparseMatrix<T>::SetZero()
 template <typename T>
 inline int SparseMatrix<T>::Transpose()
 {
-  SparseMatrix<T> mat(length);
+  SparseMatrix<T> mat(this->length);
   int i, j;
   T a;
 
-  for(i=1;i<=totalLength;i++)
+  for(i=1;i<=this->totalLength;i++)
     {
       GoToDiagonal(i);
 
@@ -683,13 +683,13 @@ inline int SparseMatrix<T>::Transpose()
 template <typename T>
 inline SparseMatrix<T> SparseMatrix<T>::operator+ (SparseMatrix<T>& matrix)
 {
-  SparseMatrix<T> mat(length);
+  SparseMatrix<T> mat(this->length);
   int i, j;
   T a;
 
   mat = matrix;
 
-  for(i=1;i<=totalLength;i++)
+  for(i=1;i<=this->totalLength;i++)
     {
       GoToDiagonal(i);
 
@@ -718,7 +718,7 @@ inline SparseMatrix<T> IdentityMatrix(const Array<int>& length)
   SparseMatrix<T> matrix(length);
   int i;
 
-  for(i=1; i<=totalLength; i++)
+  for(i=1; i <= SparseMatrix<T>::totalLength; i++)
   {
       matrix.Add(i,i,1);
   }

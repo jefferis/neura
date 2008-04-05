@@ -366,7 +366,8 @@ int List<T>::GoToHead()
 template <typename T>
 int List<T>::SetBookmark(const int i)
 {
-  for(int j=1, bookmark=head; j<i; i++)
+  this->bookmark=head;
+  for(int j=1; j<i; j++)
     {
       if(!bookmark=bookmark->next)
 	{

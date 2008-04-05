@@ -313,10 +313,10 @@ int Smoother<T>::ProjectedGaussSeidelStep(SparseMatrix<T>& mat, MultiVector<T>& 
 	{
 	  u.Set(row,(b[row]-sum)/diag);
 
-	  if(u[row]<projection[row])
+	  if(u[row]<this->projection[row])
 	    {
 	      //	      cout << "correction at " << row << endl;
-	      u[row] = projection[row];
+	      u[row] = this->projection[row];
 	    }
 	}
       else
