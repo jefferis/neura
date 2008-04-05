@@ -2,7 +2,7 @@
 #ifndef _NRACUBEMARK_H_
 #define _NRACUBEMARK_H_
 
-#include <qcanvas.h>
+#include <q3canvas.h>
 #include <qcolor.h>
 #include <qstring.h>
 

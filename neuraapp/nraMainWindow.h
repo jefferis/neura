@@ -11,7 +11,7 @@
 #define _NRAMAINWINDOW_H_
 
 #include <map.h>
-#include <qvariant.h>
+#include "qvariant.h"
 #include <qcolor.h>
 #include <qwidget.h>
 #include <qpainter.h>
@@ -22,7 +22,7 @@
 #include <qstring.h>
 #include <qslider.h>
 #include <qstatusbar.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qmenubar.h>
 #include <qfiledialog.h>
 #include <qcheckbox.h>
@@ -42,15 +42,15 @@
 #include <qwhatsthis.h>
 #include <qaction.h>
 #include <qmenubar.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qtoolbar.h>
 #include <qfiledialog.h>
 #include <qdir.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <qstring.h>
-#include <qcanvas.h>
+#include <q3canvas.h>
 #include <qprogressbar.h>
-#include <qhbox.h>
+#include <q3hbox.h>
 
 #include <qvariant.h>
 #include <qmainwindow.h>

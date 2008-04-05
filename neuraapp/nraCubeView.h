@@ -10,7 +10,7 @@
 #ifndef _NRACUBEVIEW_H_
 #define _NRACUBEVIEW_H_
 
-#include <qcanvas.h>
+#include <q3canvas.h>
 
 #include "../reconstructionlib/reconstruction.h"
 #include "../nraSmartPointer.h"
