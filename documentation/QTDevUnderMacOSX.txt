@@ -1,0 +1,68 @@
+QT Development under MacOSX using fink.
+
+
+Installation:
+
+Go to the apple home page, download and install the two packages
+
+	- X11 for MacOSX
+	- X11 for MacOSX SDK
+
+at http://www.apple.com/macosx/x11/download/
+
+Go to the fink projects homepage, download and install
+
+	- Fink x.y.z Binary Installer	
+	
+at http://fink.sourceforge.net/download/index.php
+
+Go trough setup instructions and set up your .cshrc file
+as described.
+If you have already customized your tcsh with a .tcshrc file
+it is neccessary to include the .cshrc file in the .tcshrc file
+with
+
+	source ~/.cshrc
+
+Add also following line to your .tcshrc file
+
+	setenv DISPLAY :0.0
+	
+This will enables the QT application to use the X-Server.
+
+Install the qt packages with
+
+	sudo apt-get install qt
+
+and
+	
+	sudo apt-get install qt-dev
+	
+The latter is neccessary for the header files.
+
+The library can be configured with qtconfigure.
+
+
+
+Development:
+
+Create your projects as described in the QT reference with
+qmake -project. In the resulting makefile change following line
+
+	LIBS     = $(SUBLIBS)  -L$(QTDIR)/lib -L/sw/lib  -L/usr/X11R6/lib -lqt -lXext -lX11 -lm -lXt
+
+to
+
+	LIBS     = $(SUBLIBS)  -L$(QTDIR)/lib -L/sw/lib  -L/usr/X11R6/lib -lqt-mt -lXext -lX11 -lm -lXt
+
+as in fink the name of the qt lib is renamed to qt-mt
+Compile your project with make as usual.
+
+
+
+Execution of your compiled application:
+
+It is neccessary that the X-Server is already up and running and
+the environment variable is DISPLAY is set to :0.0 to start your application.
+
+

@@ -1,0 +1,33 @@
+This file contains information about current work on the project cfd.
+
+To do:
+Meta:
+- Use http://webcollab.sourceforge.net/install.html for project management
+
+
+GUI:
+- Set and remove orientation marks
+- panel to adjust brightness and contrast
+
+
+reconstructionlib:
+- detect size of cellbody
+- detect dendrite terminations reliable (using Schalenmodell)
+- detect not connected dendritic structures
+
+
+segmentationlib:
+- fast marching method should be used
+
+
+
+
+mathlib, datalib:
+- fast altivec and mmx implementation
+
+
+
+
+
+
+Done:

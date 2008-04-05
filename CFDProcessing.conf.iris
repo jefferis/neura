@@ -1,0 +1,86 @@
+SHELL=/bin/tcsh
+
+ARCH=sgi   
+DXARCH=sgi
+
+# GNU , INTEL
+DEVELOPERSYSTEM=GNU
+  
+
+#MEMDEBUG DEBUG RELEASE
+VERSION=RELEASE
+
+#/usr/freeware/include
+
+#QT Controll
+#QTDIR=/usr/freeware/Qt
+QTDIR= /user/pbroser/qt-x11-free-3.2.0b2
+QTINC= -I$(QTDIR)/include
+QTCPP= $(QTINC) -D$(ARCH) -fPIC -fno-common  -Ddlsym=dlsym_auto_underscore -DQT_NO_DEBUG
+QTLIBS= -L$(QTDIR)/lib -L/usr/X11R6/lib -L/usr/freeware/lib32
+QTLDFLAGS= -lqt -lXext -lX11 
+QTLDFLAGSSTATIC= -static -lqt -lGL -lXext -lXmu -lXi -lX11 -lSM -lICE -ldl -lpng -ljpeg -lfreetype -lz
+#-lXft -lXrender -lXinerama
+MOC= $(QTDIR)/bin/moc
+
+#DX Controll
+DXBASE=/user/roth/src/dx-4.1.3/dx
+DXTYPE=inboard 
+
+
+#Program Komponents YES/NO
+CONTROLLDXSUPPORT=NO
+CONTROLLCFDVIEWER=NO
+CONTROLLNLDPROCESSING=NO
+CONTROLLDOC=NO
+
+
+##############################################################################
+ifeq ($(DEVELOPERSYSTEM),INTEL)
+#Compiler, Linker and Debug Controll
+LINKER = icc
+CPPC = icc
+CC = icc
+COMPILER = INTEL
+NAME = intel
+CPPOPT = -tpp6 -xiMK -DINTEL
+GCFLAGS   = $(CPPOPT) -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -ANSI
+GCPPFLAGS = $(CPPOPT) -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -ANSI
+GLDFLAGS =  $(CPPOPT)
+endif
+
+ifeq ($(DEVELOPERSYSTEM),GNU)
+LINKER = g++
+CPPC = gcc
+CC = gcc
+COMPILER = GNU
+endif
+
+ifeq ($(VERSION),MEMDEBUG)
+#MemoryDebug Version
+# -v Option fuer ausfuehliche Ausgabe!
+GCFLAGS   = -include $(CFDROOT)/sys.h -include $(CFDROOT)/debug.h -DCWDEBUG -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -include $(CFDROOT)/sys.h -include $(CFDROOT)/debug.h -DCWDEBUG -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c
+GLDFLAGS =  -lcwd 
+endif
+
+ifeq ($(VERSION),DEBUG)
+#Debug Version
+# -v Option fuer ausfuehliche Ausgabe!
+GCFLAGS   = -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GLDFLAGS =  -lm -ltiff /usr/lib32/libjpeg.so
+endif
+
+ifeq ($(VERSION),RELEASE)
+#Release Version
+GCFLAGS   = -Wno-deprecated  -O3 -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -Wno-deprecated  -O3 -D$(ARCH) -D$(COMPILER) -c 
+GLDFLAGS =  -lm -ltiff /usr/lib32/libjpeg.so
+endif
+
+
+
+
+
+

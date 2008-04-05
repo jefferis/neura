@@ -1,0 +1,83 @@
+SHELL=/bin/tcsh
+
+ARCH=linux   
+DXARCH=linux
+
+# GNU , INTEL
+DEVELOPERSYSTEM=GNU
+  
+
+#MEMDEBUG DEBUG RELEASE
+VERSION=RELEASE
+
+
+#QT Controll
+QTDIR=/usr/lib/qt3
+QTINC= -I$(QTDIR)/include
+QTCPP= $(QTINC) -D$(ARCH) -fPIC -fno-common -pipe -Ddlsym=dlsym_auto_underscore -DQT_NO_DEBUG
+QTLIBS= -L$(QTDIR)/lib64 -L/usr/X11R6/lib64 
+QTLDFLAGS= -lqt -lXext -lX11 
+QTLDFLAGSSTATIC= -static -lqt -lGL -lXext -lXmu -lXi -lXft -lXrender -lXinerama -lX11 -lSM -lICE -ldl -lpng -ljpeg -lfreetype -lz -ltiff
+MOC= $(QTDIR)/bin/moc
+
+#DX Controll
+DXBASE=/opt/dx
+DXTYPE=inboard 
+
+
+#Program Komponents YES/NO
+CONTROLLDXSUPPORT=NO
+CONTROLLCFDVIEWER=NO
+CONTROLLNLDPROCESSING=NO
+CONTROLLDOC=YES
+
+
+##############################################################################
+ifeq ($(DEVELOPERSYSTEM),INTEL)
+#Compiler, Linker and Debug Controll
+LINKER = icc
+CPPC = icc
+CC = icc
+COMPILER = INTEL
+NAME = intel
+CPPOPT = -tpp6 -xiMK -DINTEL
+GCFLAGS   = $(CPPOPT) -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -ANSI
+GCPPFLAGS = $(CPPOPT) -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -ANSI
+GLDFLAGS =  $(CPPOPT)
+endif
+
+ifeq ($(DEVELOPERSYSTEM),GNU)
+LINKER = g++
+CPPC = gcc
+CC = gcc
+COMPILER = GNU
+endif
+
+ifeq ($(VERSION),MEMDEBUG)
+#MemoryDebug Version
+# -v Option fuer ausfuehliche Ausgabe!
+GCFLAGS   = -include $(CFDROOT)/sys.h -include $(CFDROOT)/debug.h -DCWDEBUG -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -include $(CFDROOT)/sys.h -include $(CFDROOT)/debug.h -DCWDEBUG -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c
+GLDFLAGS =  -lcwd 
+endif
+
+ifeq ($(VERSION),DEBUG)
+#Debug Version
+# -v Option fuer ausfuehliche Ausgabe!
+GCFLAGS   = -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GLDFLAGS =  -lm -ltiff
+endif
+
+ifeq ($(VERSION),RELEASE)
+#Release Version
+GCFLAGS   = -Wno-deprecated  -O3 -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -Wno-deprecated  -O3 -D$(ARCH) -D$(COMPILER) -c 
+GLDFLAGS =  -lm -ltiff
+endif
+
+
+
+
+
+

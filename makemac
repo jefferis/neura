@@ -1,0 +1,19 @@
+#!/bin/sh
+cd cfdlib
+make
+cd ..
+cd datalib
+make
+cd ..
+cd mathlib
+make
+cd ..
+cd reconstructionlib
+make 
+cd ..
+cd commandlinetools
+make
+cd ..
+cd segmentationlib
+cd ..
+

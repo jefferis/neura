@@ -1,0 +1,49 @@
+#!/bin/tcsh
+echo CFDROOT=$PWD > .CFDROOT
+set UName=`uname -m`
+echo Machine: $UName
+
+if (  $UName == "x86_64" ) then 
+    echo HOSTTYPE=Opteron;
+    cat .CFDROOT  CFDProcessing.conf.opteron > CFDProcessing.conf;
+    exit 0;
+endif
+
+if ( $HOSTTYPE == "macintosh" ) then 
+    echo HOSTTYPE=macintosh; 
+    cat .CFDROOT CFDProcessing.conf.macosx > CFDProcessing.conf;
+    exit 0;
+endif
+
+if ( $HOSTTYPE == "powermac" ) then
+    echo HOSTTYPE=powermac;
+    cat .CFDROOT CFDProcessing.conf.macosx > CFDProcessing.conf;
+    exit 0;
+endif
+
+if ( UName == "Power Macintosh" ) then
+    echo HOSTTYPE=powermac;
+    cat .CFDROOT CFDProcessing.conf.macosx > CFDProcessing.conf;
+    exit 0;
+endif
+
+if ( UName ==  "i686" ) then 
+    echo linux machine;
+    cat .CFDROOT  CFDProcessing.conf.linux > CFDProcessing.conf;
+    exit 0;
+endif
+
+
+if ( $HOSTTYPE == "i586-linux" ) then 
+    echo HOSTTYPE=i586-linux;
+    cat .CFDROOT  CFDProcessing.conf.linux > CFDProcessing.conf;
+    exit 0;
+endif
+
+
+
+if ( "$HOSTTYPE" == "iris4d" ) then
+   echo HOSTTYPE=iris4d; 
+   cat .CFDROOT CFDProcessing.conf.iris > CFDProcessing.conf;
+   exit 0;
+endif

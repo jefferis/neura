@@ -1,0 +1,75 @@
+%{
+double yylval;
+
+#define OPENBRACKET 1
+#define CLOSEBRACKET 2
+#define SEPERATOR 3 
+#define DEFFENITION 4
+#define NUMBER 5
+#define PT3DADD 6
+#define ACCESS 7
+#define CREATE 8
+#define PT3DCLEAR 9
+#define VARIABLE 10
+#define NEWLINE 11
+#define CONNECT 12
+
+#define ERRORREADINDFILE 10001
+%}
+    
+%%
+\} |
+\{ ;
+[ \t] ;
+\n {return NEWLINE;}
+\( {return OPENBRACKET;}
+\) {return CLOSEBRACKET;}
+
+\, {return SEPERATOR;}
+\= {return DEFFENITION;}
+
+
+[0-9]+[.][0-9]+ |
+[0-9]+ {
+	sscanf (yytext,"%lf", &yylval);
+	return NUMBER;}
+
+pt3dadd {return PT3DADD;}
+access {return ACCESS;}
+create {return CREATE;}
+pt3dclear {return PT3DCLEAR;}
+connect return CONNECT;
+
+[a-zA-Z0-9]+ {return VARIABLE;}
+
+
+"/*"    {
+	char c;
+	for (;;)
+	    {
+	    c=input();
+	    while( (c!='*') && (c!=EOF) )
+	    { c=input();}; /* eat up comments */
+	    
+	    if (c == '*')
+		{
+		while( (c=input()) == '*');
+		if (c=='/') 
+		    {
+		     break; /* found end of commend */
+		    };
+		};
+	    if (c==EOF)
+		{
+		printf("EOF in comment\n");
+		return ERRORREADINDFILE;
+		};
+	    };
+	};
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+CFDROOT=/Users/philip/NeuraData/cfd
+SHELL=/bin/tcsh
+
+ARCH=sgi   
+DXARCH=macos
+
+# GNU , INTEL
+DEVELOPERSYSTEM=GNU
+  
+
+#MEMDEBUG DEBUG RELEASE
+VERSION=RELEASE
+
+
+#QT Controll
+#QTDIR=/sw
+QTINC= -I$(QTDIR)/include -I/sw/include/qt -I/sw/include 
+QTCPP= $(QTINC) -D$(ARCH)-fPIC -fno-common -pipe -Ddlsym=dlsym_auto_underscore -Wall -W -Os -mcpu=750 -mtune=750  -DQT_NO_DEBUG 
+QTLIBS= 
+QTLDFLAGS= -prebind -L/Developer/qt/lib -lqt -framework Carbon -framework QuickTime -lresolv -lz -framework OpenGL -framework AGL
+QTLDFLAGSSTATIC= -static -lqt -lGL -lSM -lICE -ldl -lpng -ljpeg -lfreetype -lz
+MOC= $(QTDIR)/bin/moc
+
+#DX Controll
+DXBASE=/usr/local/dx
+DXTYPE=inboard 
+
+
+#Program Komponents YES/NO
+CONTROLLDXSUPPORT=NO
+CONTROLLCFDVIEWER=NO
+CONTROLLNLDPROCESSING=NO
+CONTROLLDOC=NO
+
+
+##############################################################################
+ifeq ($(DEVELOPERSYSTEM),INTEL)
+#Compiler, Linker and Debug Controll
+LINKER = icc
+CPPC = icc
+CC = icc
+COMPILER = INTEL
+NAME = intel
+CPPOPT = -tpp6 -xiMK -DINTEL
+GCFLAGS   = $(CPPOPT) -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -ANSI
+GCPPFLAGS = $(CPPOPT) -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -ANSI
+GLDFLAGS =  $(CPPOPT)
+endif
+
+ifeq ($(DEVELOPERSYSTEM),GNU)
+LINKER = g++
+CPPC = gcc
+CC = gcc
+COMPILER = GNU
+endif
+
+ifeq ($(VERSION),MEMDEBUG)
+#MemoryDebug Version
+# -v Option fuer ausfuehliche Ausgabe!
+GCFLAGS   = -include $(CFDROOT)/sys.h -include $(CFDROOT)/debug.h -DCWDEBUG -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -include $(CFDROOT)/sys.h -include $(CFDROOT)/debug.h -DCWDEBUG -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c
+GLDFLAGS =  -lcwd 
+endif
+
+ifeq ($(VERSION),DEBUG)
+#Debug Version
+# -v Option fuer ausfuehliche Ausgabe!
+GCFLAGS   = -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -I/sw/include
+GLDFLAGS =  -L/sw/lib -lm -ltiff
+endif
+
+ifeq ($(VERSION),RELEASE)
+#Release Version
+GCFLAGS   = -Wno-deprecated  -O3 -faltivec -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -Wno-deprecated  -O3 -faltivec -D$(ARCH) -D$(COMPILER) -c -I/sw/include
+GLDFLAGS =  -L/sw/lib -lm -ltiff
+endif
+
+
+
+
+
+
