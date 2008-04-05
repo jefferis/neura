@@ -360,7 +360,7 @@ Array<T>& Array<T>::operator= (const T& a)
 template <class T>
 Array<T>& Array<T>::operator- (const T&)
 {
- int lengthofa = a.GetLength();
+ int lengthofa = this->a.GetLength();
 
 #ifdef DEBUG
   if(length != lengthofa)
@@ -372,7 +372,7 @@ Array<T>& Array<T>::operator- (const T&)
 
   for(int i=1;i<=length;i++)
     {
-      elements[i] -= a[i];
+      elements[i] -= this->a[i];
     }
 
   return(*this);
