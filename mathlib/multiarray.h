@@ -356,7 +356,7 @@ template <typename T>
 int MultiArray<T>::GetElement(const Array<int>& index, T& element) const
 {
   int position = Index(index);
-  return(elements.GetElement(position,value));
+  return(elements.GetElement(position,this->value));
 }
 
 

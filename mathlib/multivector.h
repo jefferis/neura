@@ -32,7 +32,7 @@ public:
 template <typename T>
 MultiVector<T>::MultiVector(const Array<int>& newLength)
 {
-  Reset(newLength);
+  this->Reset(newLength);
 }
 
 
@@ -40,7 +40,7 @@ MultiVector<T>::MultiVector(const Array<int>& newLength)
 template <typename T>
 MultiVector<T>::MultiVector(const int newLength)
 {
-  Reset(newLength);
+  this->Reset(newLength);
 }
 
 
@@ -79,19 +79,19 @@ MultiVector<T>::MultiVector(const int & l)
 template <typename T>
 MultiVector<T> MultiVector<T>::operator+ (const MultiVector<T> & vector) const
 {
-  MultiVector<T> sum(length);
+  MultiVector<T> sum(this->length);
 
 #ifdef DEBUG	
-  if(totalLength != vector.TotalNumberOfElements())
+  if(this->totalLength != vector.TotalNumberOfElements())
     {
       cout << "MultiVector operator +: Dimensions mismatch!" << endl;
       exit(1);
     }
 #endif
 
-  for(int i=1;i<=totalLength;i++)
+  for(int i=1;i<=this->totalLength;i++)
     {
-      sum.Set(i,elements[i]+vector[i]);
+      sum.Set(i,this->elements[i]+vector[i]);
     }
 
   return sum;
@@ -104,18 +104,18 @@ MultiVector<T> MultiVector<T>::operator+ (const MultiVector<T> & vector) const
 template <typename T>
 MultiVector<T> MultiVector<T>::operator- (const MultiVector<T> & vector) const
 {
-  MultiVector<T> difference(length);
+  MultiVector<T> difference(this->length);
 #ifdef DEBUG
-  if(totalLength != vector.TotalNumberOfElements())
+  if(this->totalLength != vector.TotalNumberOfElements())
     {
       cout << "MultiVector operator -: Dimensions mismatch!" << endl;
       exit(1);
     }
 #endif
   
-  for(int i=1;i<=totalLength;i++)
+  for(int i=1;i<=this->totalLength;i++)
     {
-      difference.Set(i,elements[i]-vector[i]);    
+      difference.Set(i,this->elements[i]-vector[i]);    
     }
 
   return difference;
@@ -145,19 +145,19 @@ MultiVector<T> MultiVector<T>::operator- (const MultiVector<T> & vector) const
 template <typename T>
 MultiVector<T> MultiVector<T>::operator+= (const MultiVector<T> & vector)
 { 
-  MultiVector<T> sum(length);
+  MultiVector<T> sum(this->length);
     
 #ifdef DEBUG
-  if(totalLength != vector.TotalNumberOfElements())
+  if(this->totalLength != vector.TotalNumberOfElements())
     {
       cout << "MultiVector operator +=: Dimensions mismatch!" << endl;
       exit(1);
     }
 #endif
 
-  for(int i=1;i<=totalLength;i++)
+  for(int i=1;i<=this->totalLength;i++)
     {
-      Set(i,vector[i]+elements[i]);
+      Set(i,vector[i]+this->elements[i]);
     }
 
   return(*this);
@@ -168,19 +168,19 @@ MultiVector<T> MultiVector<T>::operator+= (const MultiVector<T> & vector)
 template <typename T>
 MultiVector<T> MultiVector<T>::operator-= (const MultiVector<T> & vector)
 { 
-  MultiVector<T> sum(length);
+  MultiVector<T> sum(this->length);
 
 #ifdef DEBUG
-  if(totalLength != vector.TotalNumberOfElements())
+  if(this->totalLength != vector.TotalNumberOfElements())
     {
       cout << "MultiVector operator -=: Dimensions mismatch!" << endl;
       exit(1);
     }
 #endif
 
-  for(int i=1;i<=totalLength;i++)
+  for(int i=1;i<=this->totalLength;i++)
     {
-      Set(i,elements[i]-vector[i]);
+      Set(i,this->elements[i]-vector[i]);
     }
 
   return(*this);
@@ -194,16 +194,16 @@ T MultiVector<T>::operator* (const MultiVector<T> & vector) const
   T sum = 0;
 
 #ifdef DEBUG
-  if(totalLength != vector.TotalNumberOfElements())
+  if(this->totalLength != vector.TotalNumberOfElements())
     {
       cout << "MultiVector operator *: Dimensions mismatch!" << endl;
       exit(1);
     }
 #endif	
 
-  for(int i=1;i<=totalLength;i++)
+  for(int i=1;i<=this->totalLength;i++)
     {
-      sum += elements[i]*vector.Get(i);
+      sum += this->elements[i]*vector.Get(i);
     }
 
   return sum;

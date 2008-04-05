@@ -14,7 +14,7 @@ class Vector : public Array<T> {
 
 public:
   Vector(const int&);
-  ~Vector(){Delete();}
+  ~Vector(){this->Delete();}
 
   Vector<T> operator+ (const Vector<T> &) const;
   Vector<T> operator- (const Vector<T> &) const;
@@ -63,18 +63,18 @@ Vector<T>::Vector(const int & l)
 template <class T>
 Vector<T> Vector<T>::operator+ (const Vector<T> & vector) const
 {
-  Vector <T> sum(length);
+  Vector <T> sum(this->length);
 #ifdef DEBUG
-  if(length != vector.GetLength())
+  if(this->length != vector.GetLength())
     {
       cout << "Vector operator +: Dimensions mismatch!" << endl;
       exit(1);
     }
 #endif
 
-  for(int i=1;i<=length;i++)
+  for(int i=1;i<=this->length;i++)
     {
-      sum[i] = elements[i]+vector[i];
+      sum[i] = this->elements[i]+vector[i];
     }
 
   return sum;
@@ -83,18 +83,18 @@ Vector<T> Vector<T>::operator+ (const Vector<T> & vector) const
 template <class T>
 Vector<T> Vector<T>::operator- (const Vector<T> & vector) const
 {
-  Vector <T> diff(length);
+  Vector <T> diff(this->length);
 #ifdef DEBUG
-  if(length != vector.GetLength())
+  if(this->length != vector.GetLength())
     {
       cout << "Vector operator +: Dimensions mismatch!" << endl;
       exit(1);
     }
 #endif
 
-  for(int i=1;i<=length;i++)
+  for(int i=1;i<=this->length;i++)
     {
-      diff[i] = elements[i]-vector[i];
+      diff[i] = this->elements[i]-vector[i];
     }
 
   return diff;
@@ -109,16 +109,16 @@ T Vector<T>::operator* (const Vector<T> & vector) const
 {
   T sum = 0;
 #ifdef DEBUG
-  if(length != vector.GetLength())
+  if(this->length != vector.GetLength())
     {
       cout << "Vector operator *: Dimensions mismatch!" << endl;
       exit(1);
     }
 #endif
   
-  for(int i=1;i<=length;i++)
+  for(int i=1;i<=this->length;i++)
     {
-      sum += elements[i]*vector.GetElement(i);
+      sum += this->elements[i]*vector.GetElement(i);
     }
 
   return sum;
