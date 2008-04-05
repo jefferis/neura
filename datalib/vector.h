@@ -23,11 +23,11 @@ public:
   
 
  
-  friend T ScalarProduct <>(const Vector<T>&, const Vector<T>&);
-  friend double Norm <T>(const Vector<T>&);
-  friend T NormSquared <T>(const Vector<T>&);
-  friend Vector<T> ComponentMultiply<T>(const Vector<T>& A1, const Vector<T>& A2);
-  friend ostream  &operator<< <T>(ostream &ostr, const Vector<T> &v); 
+  //friend T ScalarProduct <>(const Vector<T>&, const Vector<T>&);
+  //friend double Norm <T>(const Vector<T>&);
+  //friend T NormSquared <T>(const Vector<T>&);
+  //friend Vector<T> ComponentMultiply<T>(const Vector<T>& A1, const Vector<T>& A2);
+  //friend ostream  &operator<< <T>(ostream &ostr, const Vector<T> &v); 
   //friend Vector<T> operator* (const T & factor, const Vector<T> & vector);
 };
 
