@@ -87,9 +87,9 @@ main(int argc, char **argv)
     */
     filterOptions->tau=4.0;
     filterOptions->time_steps=1;
-    filterOptions->integration_size_x=20;
-    filterOptions->integration_size_y=20;
-    filterOptions->integration_size_z=20;
+    filterOptions->integration_size_x=30;
+    filterOptions->integration_size_y=30;
+    filterOptions->integration_size_z=30;
     filterOptions->dependence_type=BLACK_SAPIRO;
     
     //Create hierachy
