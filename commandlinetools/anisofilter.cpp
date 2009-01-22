@@ -87,12 +87,10 @@ main(int argc, char **argv)
     */
     filterOptions->tau=4.0;
     filterOptions->time_steps=1;
-    filterOptions->integration_size_x=10;
-    filterOptions->integration_size_y=10;
-    filterOptions->integration_size_z=10;
+    filterOptions->integration_size_x=20;
+    filterOptions->integration_size_y=20;
+    filterOptions->integration_size_z=20;
     filterOptions->dependence_type=BLACK_SAPIRO;
-	// since z spacing is approx 2 times x y 
-	filterOptions->integration_size_z=5;
     
     //Create hierachy
     int i=0, maxsize=200;
