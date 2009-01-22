@@ -90,7 +90,7 @@ main(int argc, char **argv)
     filterOptions->integration_size_x=10;
     filterOptions->integration_size_y=10;
     filterOptions->integration_size_z=10;
-    
+    filterOptions->dependence_type=BLACK_SAPIRO;
     
     //Create hierachy
     int i=0, maxsize=200;
