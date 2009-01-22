@@ -85,6 +85,11 @@ main(int argc, char **argv)
     filterOptions->integration_size_y=scanningRange;
     filterOptions->integration_size_z=scanningRange;
     */
+    filterOptions->tau=4.0;
+    filterOptions->time_steps=1;
+    filterOptions->integration_size_x=10;
+    filterOptions->integration_size_y=10;
+    filterOptions->integration_size_z=10;
     
     
     //Create hierachy
