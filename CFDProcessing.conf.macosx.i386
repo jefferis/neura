@@ -1,0 +1,88 @@
+SHELL=/bin/tcsh
+
+ARCH=i386   
+DXARCH=macos
+
+# GNU , INTEL
+DEVELOPERSYSTEM=GNU
+  
+
+#MEMDEBUG DEBUG RELEASE
+VERSION=RELEASE
+
+MYLOCALLIBS=/opt/local/lib
+MYLOCALINC=/opt/local/include
+
+#QT Controll
+QTDIR=/usr
+QTINC= -I$(QTDIR)/include -I${MYLOCALINC}/qt -I${MYLOCALINC} \
+  -I/Library/Frameworks/QtCore.framework/Versions/4/Headers \
+  -I/Library/Frameworks/QtGui.framework/Versions/4/Headers \
+  -I/Library/Frameworks/Qt3Support.framework/Versions/4/Headers
+QTCPP= $(QTINC) -D$(ARCH) -fPIC -fno-common -pipe -Ddlsym=dlsym_auto_underscore -Wall -W -Os -DQT_NO_DEBUG 
+QTLIBS= -L$(QTDIR)/lib -L/sw/lib -L/sw/lib -L/usr/X11R6/lib 
+QTLDFLAGS= -framework CoreServices -lqt-mt -lXext -lX11 
+QTLDFLAGSSTATIC= -static -lqt-mt -lGL -lXext -lXmu -lXi -lXft -lXrender -lXinerama -lX11 -lSM -lICE -ldl -lpng -ljpeg -lfreetype -lz
+MOC= /$(QTDIR)/bin/moc
+
+#DX Controll
+DXBASE=/usr/local/dx
+DXTYPE=inboard 
+
+
+#Program Komponents YES/NO
+CONTROLLDXSUPPORT=NO
+CONTROLLCFDVIEWER=NO
+CONTROLLNLDPROCESSING=NO
+CONTROLLDOC=NO
+
+
+##############################################################################
+ifeq ($(DEVELOPERSYSTEM),INTEL)
+#Compiler, Linker and Debug Controll
+LINKER = icc
+CPPC = icc
+CC = icc
+COMPILER = INTEL
+NAME = intel
+CPPOPT = -tpp6 -xiMK -DINTEL
+GCFLAGS   = $(CPPOPT) -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -ANSI
+GCPPFLAGS = $(CPPOPT) -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -ANSI
+GLDFLAGS =  $(CPPOPT)
+endif
+
+ifeq ($(DEVELOPERSYSTEM),GNU)
+LINKER = g++
+CPPC = gcc
+CC = gcc
+COMPILER = GNU
+endif
+
+ifeq ($(VERSION),MEMDEBUG)
+#MemoryDebug Version
+# -v Option fuer ausfuehliche Ausgabe!
+GCFLAGS   = -include $(CFDROOT)/sys.h -include $(CFDROOT)/debug.h -DCWDEBUG -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -include $(CFDROOT)/sys.h -include $(CFDROOT)/debug.h -DCWDEBUG -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c
+GLDFLAGS =  -lcwd 
+endif
+
+ifeq ($(VERSION),DEBUG)
+#Debug Version
+# -v Option fuer ausfuehliche Ausgabe!
+GCFLAGS   = -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -Wno-deprecated  -g -DDEBUG -D$(ARCH) -D$(COMPILER) -c -I${MYLOCALINC}
+GLDFLAGS =  -L${MYLOCALLIBS} -lm -ltiff
+endif
+
+ifeq ($(VERSION),RELEASE)
+#Release Version
+GCFLAGS   = -Wno-deprecated  -O3 -D$(ARCH) -D$(COMPILER) -c 
+GCPPFLAGS = -Wno-deprecated  -O3 -fpermissive -D$(ARCH) -D$(COMPILER) -c -I${MYLOCALINC}
+GLDFLAGS =  -L${MYLOCALLIBS} -lm -ltiff
+endif
+
+
+
+
+
+
