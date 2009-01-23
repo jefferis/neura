@@ -60,30 +60,16 @@ main(int argc, char **argv)
 	}
 	
 		
-        if (strcmp(o.get_option(),"ix")==0)
+        if (strcmp(o.get_option(),"scanrange")==0)
         {
             int help;
             if (sscanf (o.get_value(),"%d",&(help))==EOF) continue;
             filterOptions->integration_size_x=help;
-            cout << "ix=" << filterOptions->integration_size_x << endl;
-        };
-		
-        if (strcmp(o.get_option(),"iy")==0)
-        {
-            int help;
-            if (sscanf (o.get_value(),"%d",&(help))==EOF) continue;
             filterOptions->integration_size_y=help;
-            cout << "iy=" << filterOptions->integration_size_y << endl;
-        };
-		
-        if (strcmp(o.get_option(),"iz")==0)
-        {
-            int help;
-            if (sscanf (o.get_value(),"%d",&(help))==EOF) continue;
             filterOptions->integration_size_z=help;
-            cout << "iz=" << filterOptions->integration_size_z << endl;
+            cout << "scan range =" << filterOptions->integration_size_x << endl;
         };
-		
+				
 		if (strcmp(o.get_option(),"tau")==0)
         {
             float help;
