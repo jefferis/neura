@@ -34,7 +34,8 @@ int
 main(int argc, char **argv)
 {
   DataCube cube(3);
-  
+	FilterOptions *filterOptions = new FilterOptions;
+
   command_line_parser parser(argc, argv);
     if (argc<3) 
     {
@@ -58,8 +59,47 @@ main(int argc, char **argv)
 	  return 0;
 	}
 	
-	//Parser command go in here
-   };  
+		
+        if (strcmp(o.get_option(),"ix")==0)
+        {
+            int help;
+            if (sscanf (o.get_value(),"%d",&(help))==EOF) continue;
+            filterOptions->integration_size_x=help;
+            cout << "ix=" << filterOptions->integration_size_x << endl;
+        };
+		
+        if (strcmp(o.get_option(),"iy")==0)
+        {
+            int help;
+            if (sscanf (o.get_value(),"%d",&(help))==EOF) continue;
+            filterOptions->integration_size_y=help;
+            cout << "iy=" << filterOptions->integration_size_y << endl;
+        };
+		
+        if (strcmp(o.get_option(),"iz")==0)
+        {
+            int help;
+            if (sscanf (o.get_value(),"%d",&(help))==EOF) continue;
+            filterOptions->integration_size_z=help;
+            cout << "iz=" << filterOptions->integration_size_z << endl;
+        };
+		
+		if (strcmp(o.get_option(),"tau")==0)
+        {
+            float help;
+            if (sscanf (o.get_value(),"%f",&(help))==EOF) continue;
+            filterOptions->tau=help;
+            cout << "tau=" << filterOptions->tau << endl;
+        };
+		
+		if (strcmp(o.get_option(),"nsteps")==0)
+        {
+            float help;
+            if (sscanf (o.get_value(),"%f",&(help))==EOF) continue;
+            filterOptions->time_steps=help;
+            cout << "nsteps=" << filterOptions->time_steps << endl;
+        };
+};  
 
 
    
@@ -77,7 +117,6 @@ main(int argc, char **argv)
  	return 1;
  }
   	MultiCompartmentList *multi = new MultiCompartmentList(&cube, callBack);
-    FilterOptions *filterOptions = new FilterOptions;
     /* To be done! 
     filterOptions->tau=timeStepSize;
     filterOptions->time_steps=nrOfTimeSteps;
@@ -85,12 +124,12 @@ main(int argc, char **argv)
     filterOptions->integration_size_y=scanningRange;
     filterOptions->integration_size_z=scanningRange;
     */
-    filterOptions->tau=4.0;
-    filterOptions->time_steps=1;
-    filterOptions->integration_size_x=30;
-    filterOptions->integration_size_y=30;
-    filterOptions->integration_size_z=30;
-    filterOptions->dependence_type=BLACK_SAPIRO;
+//    filterOptions->tau=4.0;
+//    filterOptions->time_steps=2;
+//    filterOptions->integration_size_x=30;
+//    filterOptions->integration_size_y=30;
+//    filterOptions->integration_size_z=30;
+//    filterOptions->dependence_type=BLACK_SAPIRO;
     
     //Create hierachy
     int i=0, maxsize=200;
