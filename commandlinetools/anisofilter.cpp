@@ -67,7 +67,7 @@ main(int argc, char **argv)
             filterOptions->integration_size_x=help;
             filterOptions->integration_size_y=help;
             filterOptions->integration_size_z=help;
-            cout << "scan range =" << filterOptions->integration_size_x << endl;
+            cout << "scanrange=" << filterOptions->integration_size_x << endl;
         };
 				
 		if (strcmp(o.get_option(),"tau")==0)
@@ -78,12 +78,52 @@ main(int argc, char **argv)
             cout << "tau=" << filterOptions->tau << endl;
         };
 		
+		if (strcmp(o.get_option(),"ipflag")==0)
+        {
+            int help;
+            if (sscanf (o.get_value(),"%d",&(help))==EOF) continue;
+            filterOptions->ip_flag=help;
+            cout << "ipflag=" << filterOptions->ip_flag << endl;
+        };
+
 		if (strcmp(o.get_option(),"nsteps")==0)
         {
-            float help;
-            if (sscanf (o.get_value(),"%f",&(help))==EOF) continue;
+            int help;
+            if (sscanf (o.get_value(),"%d",&(help))==EOF) continue;
             filterOptions->time_steps=help;
             cout << "nsteps=" << filterOptions->time_steps << endl;
+        };
+
+		if (strcmp(o.get_option(),"anicoeff1")==0)
+        {
+            float coeff;
+            if (sscanf (o.get_value(),"%f",&(coeff))==EOF) continue;
+            filterOptions->anicoeff1=coeff;
+            cout << "anicoeff1=" << filterOptions->anicoeff1 << endl;
+        };
+
+		if (strcmp(o.get_option(),"anicoeff2")==0)
+        {
+            float coeff;
+            if (sscanf (o.get_value(),"%f",&(coeff))==EOF) continue;
+            filterOptions->anicoeff2=coeff;
+            cout << "anicoeff2=" << filterOptions->anicoeff2 << endl;
+        };
+
+		if (strcmp(o.get_option(),"anicoeff3")==0)
+        {
+            float coeff;
+            if (sscanf (o.get_value(),"%f",&(coeff))==EOF) continue;
+            filterOptions->anicoeff3=coeff;
+            cout << "anicoeff3=" << filterOptions->anicoeff3 << endl;
+        };
+
+		if (strcmp(o.get_option(),"lambda")==0)
+        {
+            float coeff;
+            if (sscanf (o.get_value(),"%f",&(coeff))==EOF) continue;
+            filterOptions->lambda=coeff;
+            cout << "lambda=" << filterOptions->lambda << endl;
         };
 };  
 
