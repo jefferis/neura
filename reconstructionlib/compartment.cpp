@@ -72,10 +72,11 @@ Compartment::
     for (pos=reverseConnectionList.begin();pos!=reverseConnectionList.end();++pos)
     {
         if (pos==reverseConnectionList.end()) return;
-        if (pos==NULL)
-        {
-            cerr <<" Error pos Points EMPTY!!!" << endl;
-            exit(1);};
+				// GJ: you are not apparently allowed a null
+        // if (pos==NULL)
+        // {
+        //     cerr <<" Error pos Points EMPTY!!!" << endl;
+        //     exit(1);};
 
         if ((*pos).to!=this)
         {
