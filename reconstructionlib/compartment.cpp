@@ -99,10 +99,11 @@ Compartment::
     for (pos=ConnectionList.begin();pos!=ConnectionList.end();++pos)
     {
         if (pos==ConnectionList.end()) return;
-        if (pos==NULL)
-        {
-            cerr <<" Error pos Points EMPTY!!!" << endl;
-            exit(1);};
+				// GJ: you are not apparently allowed a null
+        // if (pos==NULL)
+        // {
+        //     cerr <<" Error pos Points EMPTY!!!" << endl;
+        //     exit(1);};
 
         if ((*pos).from!=this)
         {
