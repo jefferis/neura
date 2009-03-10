@@ -13,3 +13,5 @@ commandlinetools/reconstructor
 commandlinetools/segmentor
 commandlinetools/simple
 commandlinetools/tifftodx
+.CFDROOT
+CFDProcessing.conf
