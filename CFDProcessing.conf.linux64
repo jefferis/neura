@@ -71,8 +71,8 @@ endif
 
 ifeq ($(VERSION),RELEASE)
 #Release Version
-GCFLAGS   = -Wno-deprecated  -O3 -D$(ARCH) -D$(COMPILER) -c 
-GCPPFLAGS = -Wno-deprecated  -O3 -D$(ARCH) -D$(COMPILER) -c 
+GCFLAGS   = -Wno-deprecated  -O3 -D$(ARCH) -D$(COMPILER) -c -fpermissive
+GCPPFLAGS = -Wno-deprecated  -O3 -D$(ARCH) -D$(COMPILER) -c -fpermissive 
 GLDFLAGS =  -lm -ltiff
 endif
 
