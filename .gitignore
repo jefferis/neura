@@ -6,7 +6,6 @@
 *.raw
 commandlinetools/anisofilter
 commandlinetools/cfdfilter
-commandlinetools/Makefile
 commandlinetools/nihtoraw
 commandlinetools/nihtorawZXchanged
 commandlinetools/rawtonih
