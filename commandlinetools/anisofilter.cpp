@@ -38,6 +38,9 @@ main(int argc, char **argv)
 
   command_line_parser parser(argc, argv);
   
+	Vector<double> spacings(3);
+	bool comandlineSpacings = false;
+	
   for (int i=0;i<parser.get_n_options();i++)
   {
     option o=parser.get_option(i);
@@ -122,6 +125,32 @@ main(int argc, char **argv)
 	    filterOptions->lambda=coeff;
 	    cout << "lambda=" << filterOptions->lambda << endl;
 		};
+		if (strcmp(o.get_option(),"dx")==0)
+		{
+			float help;
+			if (sscanf (o.get_value(),"%f",&(help))==EOF) continue;
+			spacings[1]=help;
+			cout << "dx=" << spacings[1] << endl;
+			comandlineSpacings=true;
+		};
+		
+		// Handle spacings
+		if (strcmp(o.get_option(),"dy")==0)
+		{
+			float help;
+			if (sscanf (o.get_value(),"%f",&(help))==EOF) continue;
+			spacings[2]=help;
+			cout << "dy=" << spacings[2] << endl;
+		};
+		
+		if (strcmp(o.get_option(),"dz")==0)
+		{
+			float help;
+			if (sscanf (o.get_value(),"%f",&(help))==EOF) continue;
+			spacings[3]=help;
+			cout << "dz=" << spacings[3] << endl;
+		};
+		
 	};
   
 	if (argc<3) 
@@ -143,6 +172,8 @@ main(int argc, char **argv)
  		cout << "Error loading file " << inputfilename << endl;
 		return 1;
 	}
+	// If we were given spacings on the command line use them 
+	if(comandlineSpacings)	cube.SetSpaceing(spacings);
 	MultiCompartmentList *multi = new MultiCompartmentList(&cube, callBack);
     /* To be done! 
     filterOptions->tau=timeStepSize;
