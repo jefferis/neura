@@ -368,8 +368,8 @@ private:
     	std::vector<std::string> Result;
     	Result.clear();
     	
-    	unsigned int begIdx = strLine.find_first_not_of( strSeparator );
-    	unsigned int endIdx = strLine.find( strSeparator, begIdx );
+    	int begIdx = strLine.find_first_not_of( strSeparator );
+    	int endIdx = strLine.find( strSeparator, begIdx );
  
 	    while( endIdx != std::string::npos )
 	    {

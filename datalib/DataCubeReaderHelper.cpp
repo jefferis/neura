@@ -23,8 +23,8 @@ bool split( vector<string>& Result, const string& strLine, const string&  strSep
 ///////////////////////////////////////////////////////////
 {
     Result.clear();
-    unsigned int begIdx = strLine.find_first_not_of( strSeparator );
-    unsigned int endIdx = strLine.find( strSeparator, begIdx );
+    int begIdx = strLine.find_first_not_of( strSeparator );
+    int endIdx = strLine.find( strSeparator, begIdx );
     
     while( endIdx != string::npos )
     {
