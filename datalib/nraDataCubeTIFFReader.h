@@ -132,7 +132,7 @@ public:
 			TIFFSetField(tif, TIFFTAG_COMPRESSION, 1);
 			TIFFSetField(tif, TIFFTAG_PLANARCONFIG, 1);
 			TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, 3);
-			TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP, lRowsPerStrip);
+			TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP, static_cast<uint32_t>(lRowsPerStrip));
 			TIFFSetField(tif, TIFFTAG_RESOLUTIONUNIT, 3);
 			TIFFSetField(tif, TIFFTAG_SOFTWARE, Software.c_str());
 			TIFFSetField(tif, TIFFTAG_IMAGEDESCRIPTION, ImageDescription.c_str());
