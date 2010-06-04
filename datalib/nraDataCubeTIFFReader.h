@@ -190,7 +190,7 @@ public:
 	{
 	    
 	    long lStripNmbr;
-	    long* plStripSize;
+	    uint32_t* plStripSize;
 	    long lCurrStripSize;
 	    long lCurrRowsPerStrip;
 	    long lNumOfStrips;
