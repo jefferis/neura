@@ -246,14 +246,17 @@ ReadFromTIFF(char* strFileName)
 		cout << "iRes" << iRes << endl<< flush; 
 		if(iRes == NO_SPACEINGS_TAGS || iRes == OK)
 		{
+			// GJ: moved these Resets BEFORE copying Reader.Dimension into size, d
+			// The reset function is not guaranteed to leave the original elements 
+			// intact
+			dim = 3;
+			size.Reset(dim);
+			d.Reset(dim);
 			for(int i = 0; i < dim; i++)
 			{   
 	    		size.SetElement(i+1, Reader.Dimension(i).Size);   // i+1 is needed because Vector(array.h) index is 1 based.
 	    		d.SetElement(i+1, Reader.Dimension(i).GridSpaceing);
 			}
-			dim = 3;    
-			size.Reset(dim);
-			d.Reset(dim);
 	    	if(allocated)
    		 	{
    		 	cout << "free" << endl<< flush;
