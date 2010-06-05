@@ -86,7 +86,7 @@ inline option::option(char* string)  {
 }
 
 inline bool option::is_option(char* string)  {
-	return(string[0] == '/' || string[0] == '-');
+	return(string[0] == '-');
 }
 
 inline char* option::get_option()  {
