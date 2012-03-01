@@ -53,7 +53,8 @@ main(int argc, char **argv)
 			cout << "Options (default values):" << endl;
 			cout << "-scanrange:2"<<endl<<"-tau:4.0"<<endl<<"-ipflag:0"<<endl;
 			cout << "-nsteps:4"<<endl<<"-anicoeff{1,3}:1 1 0"<<endl<<"-lambda: 0.1"<< endl;
-  	
+			cout << "-dx: -dy: -dz: (voxel dimensions)"<< endl;
+	
 			cout << "-------------------------------------------" << endl;
 			cout << "Programmed by Philip J. Broser and Roland Schulte." << endl;
 			cout << "Report bugs to <philip.broser@mpimf-heidelberg.mpg.de>." << endl;
